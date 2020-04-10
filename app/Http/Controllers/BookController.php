@@ -19,20 +19,20 @@ class BookController extends Controller
 
         $book->save();
 
-        return redirect('/book');
+        return back();
     }
 
 
     public function delete($id) {
         $book = Book::findOrFail($id);
         $book->delete();
-        return redirect('/book');
+        return back();
     }
 
     public function changeAvailability($id) {
         $book = Book::find($id);
         $book->availability = !$book->availability;
         $book->save();
-        return redirect('/book');
+        return back();
     }
 }
