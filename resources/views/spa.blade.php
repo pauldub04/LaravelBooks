@@ -5,6 +5,12 @@
     <title>Document</title>
     <!-- Подключаем Bootstrap, чтобы не работать над дизайном проекта -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .notAvailable{
+            color: grey;
+            text-decoration: line-through;
+        }
+    </style>
 </head>
 <body>
     @verbatim
@@ -22,13 +28,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(book, ind) in books">
-                        <th scope="row">{{ind}}</th>
+                    <div v-if="!books.length" style="font-size: 25px; color: grey; margin-top: 15px; margin-bottom: 15px">Книг пока нет</div>
+                    <tr v-for="(book, ind) in books" v-bind:class="{notAvailable: !book.availability}">
+                        <th scope="row">{{ind + 1}}</th>
                         <td>{{book.title}}</td>
                         <td>{{book.author}}</td>
                         <td>
-                            <button type="button" class="btn btn-outline-primary" @click="changeBookAvailability(book.id)"
-                                    v-on:keyup.enter>
+                            <button type="button" class="btn btn-outline-primary" @click="changeBookAvailability(book.id)">
                                 {{isAvailable(book)}}
                             </button>
                         </td>
@@ -38,7 +44,7 @@
                             </button>
                         </td>
                     </tr>
-
+                    
                     <!-- Строка с полями для добавления новой книги -->
                     <tr>
                         <th scope="row">Добавить</th>
@@ -52,6 +58,7 @@
                             </button>
                         </td>
                     </tr>
+                    
                 </tbody>
             </table>
         </div>
@@ -108,6 +115,7 @@
                 this.loadBookList();
             }
         });
+
     </script>
 </body>
 </html>
