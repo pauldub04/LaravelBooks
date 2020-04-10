@@ -15,6 +15,7 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">id</th>
                         <th scope="col">Название</th>
                         <th scope="col">Автор</th>
                         <th scope="col">Наличие</th>
@@ -22,7 +23,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="book in books">
+                    <tr v-for="(book, ind) in books">
+                        <th scope="row">{{ind}}</th>
                         <th scope="row">{{book.id}}</th>
                         <td>{{book.title}}</td>
                         <td>{{book.author}}</td>
