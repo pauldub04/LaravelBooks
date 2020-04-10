@@ -15,7 +15,7 @@ class BookController extends Controller
         $book = new Book;
         $book->title = $request->title;
         $book->author = $request->author;
-        $book->availabilty = true;
+        $book->availability = true;
 
         $book->save();
 
@@ -26,13 +26,13 @@ class BookController extends Controller
     public function delete($id) {
         $book = Book::findOrFail($id);
         $book->delete();
-        return back();
+        return redirect('/book');
     }
 
-    public function changeAvailabilty($id) {
+    public function changeAvailability($id) {
         $book = Book::find($id);
         $book->availability = !$book->availability;
         $book->save();
-        return back();
+        return redirect('/book');
     }
 }

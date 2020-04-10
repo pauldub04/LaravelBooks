@@ -27,8 +27,9 @@
                         <td>{{book.title}}</td>
                         <td>{{book.author}}</td>
                         <td>
-                            <button type="button" class="btn btn-outline-primary" @click="changeBookAvailability(book.id)">
-                                Доступна
+                            <button type="button" class="btn btn-outline-primary" @click="changeBookAvailability(book.id)"
+                                    v-on:keyup.enter>
+                                {{isAvailable(book)}}
                             </button>
                         </td>
                         <td>
@@ -42,10 +43,11 @@
                     <tr>
                         <th scope="row">Добавить</th>
                         <td><input v-model="addingTitle" type="text" class="form-control"></td>
-                        <td><input v-model="addingAuthor" type="text" class="form-control"></td>
+                        <td><input v-model="addingAuthor" type="text" class="form-control" v-on:keyup.enter="addBook()"></td>
                         <td></td>
                         <td>
-                            <button type="button" class="btn btn-outline-success" @click="addBook()">
+                            <button type="button" class="btn btn-outline-success"
+                                    @click="addBook()" v-on:keyup.enter="addBook()">
                                 Добавить
                             </button>
                         </td>
@@ -78,7 +80,6 @@
                     })
                 },
                 addBook(){
-                    alert("adding book");
                     axios.post('/book/add', {
                         title: this.addingTitle,
                         author: this.addingAuthor
@@ -92,9 +93,15 @@
                     this.loadBookList();
                 },
                 changeBookAvailability(id){
-                    axios.get(`/book/change_availabilty/${id}`)
+                    axios.get(`/book/change_availability/${id}`)
                     this.loadBookList();
                 },
+                isAvailable(obj) {
+                    if (obj.availability)
+                        return "Доступна";
+                    else
+                        return "Нет в наличии";
+                }
             },
             mounted(){
                 // Сразу после загрузки страницы подгружаем список книг и отображаем его
